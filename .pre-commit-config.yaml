@@ -1,0 +1,9 @@
+repos:
+  - repo: local
+    hooks:
+      - id: docstring-validator
+        name: PEP 257 Docstring Check
+        entry: pydocstyle
+        language: python
+        types: [python]
+        args: ["--convention=numpy"] # Or google/pep257 based on your choice
