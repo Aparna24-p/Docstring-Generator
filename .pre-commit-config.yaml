@@ -6,4 +6,4 @@ repos:
         entry: pydocstyle
         language: python
         types: [python]
-        args: ["--convention=numpy"] # Or google/pep257 based on your choice
+        args: ["--convention=numpy"]
