@@ -8,6 +8,14 @@ import pandas as pd
 
 # --- 1. SETTINGS LOADER ---
 def load_project_settings():
+    """
+    Load project configuration from the pyproject.toml file.
+
+    Returns
+    -------
+    tuple
+        A string representing the docstring style and an integer for the threshold.
+    """ 
     try:
         config = toml.load("pyproject.toml")
         settings = config.get('tool', {}).get('docstring-generator', {})
@@ -19,6 +27,19 @@ def load_project_settings():
 
 # --- 2. CORE LOGIC ---
 def collect_coverage(file_path):
+    """
+    Analyze a Python file to determine docstring coverage and detect edge cases.
+
+    Parameters
+    ----------
+    file_path : str
+        The path to the Python file to be analyzed.
+
+    Returns
+    -------
+    dict or tuple
+        Coverage statistics or a syntax error indicator.
+    """
     try:
         with open(file_path, "r") as f:
             content = f.read()
@@ -40,6 +61,12 @@ def collect_coverage(file_path):
 
 # --- 3. MAIN UI WRAPPER ---
 def main():
+    """
+    Initialize and run the Streamlit web interface for the Docstring tool.
+
+    This function handles the sidebar configuration, file uploads, and 
+    renders the final coverage and compliance reports.
+    """
     st.set_page_config(page_title="DocstringUI Pro", layout="wide")
     config_style, config_threshold = load_project_settings()
 
