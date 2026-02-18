@@ -15,7 +15,7 @@ def load_project_settings():
     -------
     tuple
         A string representing the docstring style and an integer for the threshold.
-    """ 
+    """
     try:
         config = toml.load("pyproject.toml")
         settings = config.get('tool', {}).get('docstring-generator', {})
@@ -57,7 +57,7 @@ def collect_coverage(file_path):
         perc = (documented / total * 100) if total > 0 else 100
         return {'total': total, 'documented': documented, 'perc': perc, 'details': details}
     except Exception as e:
-        return "SYNTAX_ERROR", str(e)
+        return ("SYNTAX_ERROR", str(e))
 
 # --- 3. MAIN UI WRAPPER ---
 def main():
@@ -123,7 +123,6 @@ def main():
             c3.metric("Compliance Status", "PASSED (100%)")
             st.success("✅ The code is now fully compliant with PEP 257 and selected standards.")
         else:
-            # Show status with percentage
             final_status = "PASSED" if stats['perc'] >= config_threshold else "FAILED"
             c3.metric("Compliance Status", f"{final_status} ({stats['perc']:.0f}%)")
             
