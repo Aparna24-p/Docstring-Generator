@@ -1,3 +1,21 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "docstring-generator-aparna"  # Changed from atharva to aparna
+version = "0.1.0"
+description = "Aparna's AI-powered docstring generator and validator library"
+dependencies = [
+    "streamlit",
+    "pydocstyle",
+    "toml",
+    "openai"
+]
+
+[project.scripts]
+docstring-gui = "docstring_generator.app:main"
+
 [tool.docstring-generator]
 style = "numpy"
 include = ["src/**/*.py"]
