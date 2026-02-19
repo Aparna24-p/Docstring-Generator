@@ -12,5 +12,7 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: '3.9'
-      - run: pip install pydocstyle
-      - run: pydocstyle . --convention=numpy
+      - name: Install Dependencies
+        run: pip install pydocstyle
+      - name: Run Validation
+        run: pydocstyle src --convention=numpy
