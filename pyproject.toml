@@ -22,3 +22,8 @@ include = ["src/**/*.py"]
 exclude = ["**/__init__.py", "tests/"]
 coverage_threshold = 90
 autofix = true
+
+[tool.pydocstyle]
+convention = "numpy"
+match = "(?!tests/).*\.py"
+add-ignore = ["D100", "D101", "D102", "D103", "D104"]
