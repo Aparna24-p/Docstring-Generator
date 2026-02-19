@@ -1,3 +1,5 @@
+exclude: ^tests/|^temp_upload\.py
+
 repos:
   - repo: local
     hooks:

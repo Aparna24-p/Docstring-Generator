@@ -25,5 +25,8 @@ autofix = true
 
 [tool.pydocstyle]
 convention = "numpy"
-match = "(?!tests/).*\.py"
+# This tells the tool to ignore the tests directory entirely
+match-dir = "(?!tests).*"
+# This ensures it only checks relevant python files
+match = "(?!temp_upload).*.py"
 add-ignore = ["D100", "D101", "D102", "D103", "D104"]
