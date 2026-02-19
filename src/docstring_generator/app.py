@@ -7,6 +7,7 @@ import ast
 import pandas as pd
 
 # --- 1. SETTINGS LOADER ---
+# --- 1. SETTINGS LOADER ---
 def load_project_settings():
     """
     Load project configuration from the pyproject.toml file.
