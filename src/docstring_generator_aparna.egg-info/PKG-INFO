@@ -1,0 +1,8 @@
+Metadata-Version: 2.4
+Name: docstring-generator-aparna
+Version: 0.1.0
+Summary: Aparna's AI-powered docstring generator and validator library
+Requires-Dist: streamlit
+Requires-Dist: pydocstyle
+Requires-Dist: toml
+Requires-Dist: openai

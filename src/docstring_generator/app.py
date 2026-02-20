@@ -1,12 +1,11 @@
 """Main application for AI Docstring Generator - Milestone 4 Final Version."""
 import streamlit as st
 import toml
-import subprocess
 import os
 import ast
 import pandas as pd
+from pydocstyle import check
 
-# --- 1. SETTINGS LOADER ---
 # --- 1. SETTINGS LOADER ---
 def load_project_settings():
     """
@@ -29,7 +28,7 @@ def load_project_settings():
 # --- 2. CORE LOGIC ---
 def collect_coverage(file_path):
     """
-    Analyze a Python file to determine docstring coverage and detect edge cases.
+    Analyze a Python file for coverage and specific PEP-257 violations.
 
     Parameters
     ----------
@@ -39,35 +38,48 @@ def collect_coverage(file_path):
     Returns
     -------
     dict or tuple
-        Coverage statistics or a syntax error indicator.
+        Coverage statistics including specific PEP violations.
     """
     try:
         with open(file_path, "r") as f:
             content = f.read()
             if not content.strip(): 
-                return {'total': 0, 'documented': 0, 'perc': 100, 'details': []}
+                return {'total': 0, 'documented': 0, 'perc': 100, 'details': [], 'violations': []}
             tree = ast.parse(content)
+        
         details = []
         for node in ast.walk(tree): 
             if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
                 node_type = "Class" if isinstance(node, ast.ClassDef) else "Function"
                 has_doc = ast.get_docstring(node) is not None
                 details.append({"Type": node_type, "Name": node.name, "Status": "✅ Documented" if has_doc else "❌ Undocumented"})
+        
+        # Capture specific PEP-257 violations using pydocstyle
+        violations = []
+        for error in check([file_path]):
+            violations.append({
+                "code": error.code,
+                "line": error.line,
+                "message": error.message.split(":")[0]
+            })
+
         total = len(details)
         documented = sum(1 for item in details if "✅" in item["Status"])
         perc = (documented / total * 100) if total > 0 else 100
-        return {'total': total, 'documented': documented, 'perc': perc, 'details': details}
+        
+        return {
+            'total': total, 
+            'documented': documented, 
+            'perc': perc, 
+            'details': details,
+            'violations': violations
+        }
     except Exception as e:
         return ("SYNTAX_ERROR", str(e))
 
 # --- 3. MAIN UI WRAPPER ---
 def main():
-    """
-    Initialize and run the Streamlit web interface for the Docstring tool.
-
-    This function handles the sidebar configuration, file uploads, and 
-    renders the final coverage and compliance reports.
-    """
+    """Initialize and run the Streamlit web interface for the Docstring tool. """
     st.set_page_config(page_title="DocstringUI Pro", layout="wide")
     config_style, config_threshold = load_project_settings()
 
@@ -81,7 +93,7 @@ def main():
         st.divider()
         ui_style = st.selectbox("Override Docstring Style", ["numpy", "google", "reST"])
         with st.expander("📚 Help: What is a Docstring?"):
-            st.write("A string literal used to document Python code. It is the first statement in a function or class.")
+            st.write("A string literal used to document Python code.")
 
     st.title("🚀 AI Docstring Generator & Validator")
     st.write("Ensuring standardized formats and automated quality checks.")
@@ -111,26 +123,41 @@ def main():
         else:
             st.info("No components found in this file.")
 
-        # --- UPDATED FINAL REPORT SECTION ---
+        # --- FINAL REPORT SECTION ---
         st.divider()
         st.header("Final Coverage & Compliance Report")
         
-        # Row 1: Metrics in one line
         c1, c2, c3 = st.columns(3)
         c1.metric("Total Items", stats['total'])
         c2.metric("Documentation Coverage", f"{stats['perc']:.2f}%")
         
         if stats['total'] == 0:
             c3.metric("Compliance Status", "PASSED (100%)")
-            st.success("✅ The code is now fully compliant with PEP 257 and selected standards.")
+            st.success("✅ The code is now fully compliant with PEP 257.")
         else:
             final_status = "PASSED" if stats['perc'] >= config_threshold else "FAILED"
             c3.metric("Compliance Status", f"{final_status} ({stats['perc']:.0f}%)")
             
             if final_status == "PASSED":
-                st.success(f"✅ The code is now fully compliant with PEP 257 and {ui_style.upper()} standards.")
+                st.success(f"✅ The code meets the {config_threshold}% threshold.")
             else:
-                st.warning(f"⚠️ Code does not yet meet the {config_threshold}% threshold.")
+                st.warning(f"⚠️ Code does not meet the {config_threshold}% threshold.")
+
+        # --- DETAILED PEP-257 VIOLATIONS ---
+        st.divider()
+        st.header("⚠️ PEP-257 Violations (Before)")
+        
+        violations = stats.get('violations', [])
+        if violations:
+            st.warning(f"⚠️ {len(violations)} PEP-257 violation(s) found.")
+            search_vio = st.text_input("Search violations", placeholder="Filter by message or code...")
+            
+            for i, v in enumerate(violations, 1):
+                if not search_vio or search_vio.lower() in v['code'].lower() or search_vio.lower() in v['message'].lower():
+                    with st.expander(f"Violation #{i} — {v['code']} - Line {v['line']}"):
+                        st.write(f"**Issue:** {v['message']}")
+        else:
+            st.success("✨ No PEP-257 violations found!")
 
 if __name__ == "__main__":
     main()

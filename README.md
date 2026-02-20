@@ -14,13 +14,8 @@ View our full technical details, API reference, and troubleshooting guide here:
 ## 🛠️ Installation
 ```bash
 # Clone the repository
-git clone https://github.com/Aparna24-p/Docstring-Generator.git
+git clone [https://github.com/Aparna24-p/Docstring-Generator.git](https://github.com/Aparna24-p/Docstring-Generator.git)
 cd Docstring-Generator
 
 # Install in development mode
 pip install -e .
-## ⚡ Quick Start
-Audit your code using the Streamlit dashboard:
-
-```bash
-streamlit run src/app.py

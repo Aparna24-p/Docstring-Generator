@@ -1,0 +1,18 @@
+README.md
+pyproject.toml
+src/docstring_generator/ERROR_1.py
+src/docstring_generator/SUCCESS_FILE.py
+src/docstring_generator/__init__.py
+src/docstring_generator/app.py
+src/docstring_generator/complex_cases.py
+src/docstring_generator/data_processor (1).py
+src/docstring_generator/data_processor.py
+src/docstring_generator/empty_test.py
+src/docstring_generator/syntax_error.py
+src/docstring_generator/temp_upload.py
+src/docstring_generator_aparna.egg-info/PKG-INFO
+src/docstring_generator_aparna.egg-info/SOURCES.txt
+src/docstring_generator_aparna.egg-info/dependency_links.txt
+src/docstring_generator_aparna.egg-info/entry_points.txt
+src/docstring_generator_aparna.egg-info/requires.txt
+src/docstring_generator_aparna.egg-info/top_level.txt
