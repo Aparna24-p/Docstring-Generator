@@ -19,3 +19,11 @@ cd Docstring-Generator
 
 # Install in development mode
 pip install -e .
+
+
+## ⚡ Quick Start
+
+### 1. Audit your code using the Streamlit dashboard:
+```bash
+streamlit run src/docstring_generator/app.py
+```
