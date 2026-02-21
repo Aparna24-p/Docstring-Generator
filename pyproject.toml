@@ -19,7 +19,7 @@ docstring-gui = "docstring_generator.app:main"
 [tool.docstring-generator]
 style = "numpy"
 include = ["src/**/*.py"]
-exclude = ["**/__init__.py", "tests/","app.py"]
+exclude = ["**/__init__.py", "tests/", "app.py"]
 coverage_threshold = 90
 autofix = true
 
