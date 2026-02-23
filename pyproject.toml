@@ -28,4 +28,4 @@ convention = "numpy"
 # This is the magic line: it tells the validator to ONLY look at the src folder
 match-dir = "src"
 # It also tells it to ignore any temporary files
-match = "(?!temp_upload).*"
+match = "(?!temp_upload).*" 
