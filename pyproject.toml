@@ -26,6 +26,5 @@ autofix = true
 [tool.pydocstyle]
 convention = "numpy"
 match-dir = "src"
-match = "(?!temp_upload).*"
-ignore-paths = ["src/docstring_generator/app.py", "tests"]
-
+# Match all .py files except app.py and anything under tests/
+match = "(?!app\\.py)(?!tests)(?!temp_upload).*\\.py"
