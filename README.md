@@ -25,4 +25,4 @@ pip install -e .
 ### 1. Audit your code using the Streamlit dashboard:
 ```bash
 streamlit run src/docstring_generator/app.py
-``` 
+```
