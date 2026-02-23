@@ -15,4 +15,4 @@ jobs:
       - name: Install Dependencies
         run: pip install pydocstyle
       - name: Run Validation
-        run: pydocstyle src/docstring_generator/app.py --convention=numpy
+        run: pydocstyle .
